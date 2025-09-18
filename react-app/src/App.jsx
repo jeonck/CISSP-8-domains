@@ -5,14 +5,54 @@ import { domain1Questions } from './data/domain1Questions'
 import { domain1StudyMaterials } from './data/domain1StudyMaterials'
 
 const cisspadDomains = [
-  { id: 1, name: 'Security and Risk Management', color: 'bg-red-500' },
-  { id: 2, name: 'Asset Security', color: 'bg-orange-500' },
-  { id: 3, name: 'Security Architecture and Engineering', color: 'bg-yellow-500' },
-  { id: 4, name: 'Communication and Network Security', color: 'bg-green-500' },
-  { id: 5, name: 'Identity and Access Management (IAM)', color: 'bg-blue-500' },
-  { id: 6, name: 'Security Assessment and Testing', color: 'bg-indigo-500' },
-  { id: 7, name: 'Security Operations', color: 'bg-purple-500' },
-  { id: 8, name: 'Software Development Security', color: 'bg-pink-500' }
+  {
+    id: 1,
+    name: 'Security and Risk Management',
+    color: 'bg-red-500',
+    description: 'CIA Triad 기반 보안 거버넌스, 리스크 평가·관리, 규제 준수(GDPR), BCP/DR 수립'
+  },
+  {
+    id: 2,
+    name: 'Asset Security',
+    color: 'bg-orange-500',
+    description: '데이터 분류·라벨링, 자산 식별·관리, 개인정보 보호, 데이터 보존·폐기 정책'
+  },
+  {
+    id: 3,
+    name: 'Security Architecture and Engineering',
+    color: 'bg-yellow-500',
+    description: '보안 모델(Bell-LaPadula, Biba), 평가 기준(CC), 보안 아키텍처, 취약점 평가'
+  },
+  {
+    id: 4,
+    name: 'Communication and Network Security',
+    color: 'bg-green-500',
+    description: 'OSI 모델, TCP/IP, 방화벽, VPN, 무선 보안, 네트워크 공격 방어'
+  },
+  {
+    id: 5,
+    name: 'Identity and Access Management (IAM)',
+    color: 'bg-blue-500',
+    description: '인증(Authentication), 인가(Authorization), 계정 관리, RBAC, MFA, SSO'
+  },
+  {
+    id: 6,
+    name: 'Security Assessment and Testing',
+    color: 'bg-indigo-500',
+    description: '취약점 평가, 침투 테스트, 보안 감사, 로그 분석, 성능 모니터링'
+  },
+  {
+    id: 7,
+    name: 'Security Operations',
+    color: 'bg-purple-500',
+    description: '사건 대응(NIST SP 800-61), 침해 분석, 로깅·모니터링, 복구·조사 절차'
+  },
+  {
+    id: 8,
+    name: 'Software Development Security',
+    color: 'bg-pink-500',
+    description: 'SDLC 보안, OWASP Top 10, 코드 리뷰, 애플리케이션 보안, DevSecOps'
+  }
 ]
 
 function App() {
@@ -78,16 +118,19 @@ function App() {
           {cisspadDomains.map((domain) => (
             <div
               key={domain.id}
-              className={`${domain.color} bg-opacity-20 backdrop-blur-lg rounded-xl p-6 border border-white/20 shadow-xl hover:bg-opacity-30 transition-all cursor-pointer`}
+              className={`${domain.color} bg-opacity-20 backdrop-blur-lg rounded-xl p-6 border border-white/20 shadow-xl hover:bg-opacity-30 transition-all cursor-pointer min-h-[200px] flex flex-col justify-center`}
               onClick={() => setSelectedDomain(domain)}
             >
               <div className="text-center">
                 <div className={`w-12 h-12 ${domain.color} rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl`}>
                   {domain.id}
                 </div>
-                <h3 className="text-white font-semibold text-lg leading-tight">
+                <h3 className="text-white font-semibold text-lg leading-tight mb-3">
                   {domain.name}
                 </h3>
+                <p className="text-blue-100 text-sm leading-relaxed">
+                  {domain.description}
+                </p>
               </div>
             </div>
           ))}
