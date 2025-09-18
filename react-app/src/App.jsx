@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import PracticeQuiz from './components/PracticeQuiz'
+import { domain1Questions } from './data/domain1Questions'
 
 const cisspadDomains = [
   { id: 1, name: 'Security and Risk Management', color: 'bg-red-500' },
@@ -13,6 +15,31 @@ const cisspadDomains = [
 
 function App() {
   const [selectedDomain, setSelectedDomain] = useState(null)
+  const [showQuiz, setShowQuiz] = useState(false)
+
+  const handleStartQuiz = (domainId) => {
+    if (domainId === 1) {
+      setShowQuiz(true)
+      setSelectedDomain(cisspadDomains.find(d => d.id === domainId))
+    }
+  }
+
+  const handleBackToMain = () => {
+    setShowQuiz(false)
+    setSelectedDomain(null)
+  }
+
+  if (showQuiz && selectedDomain?.id === 1) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
+        <PracticeQuiz
+          questions={domain1Questions}
+          domainName={selectedDomain.name}
+          onBack={handleBackToMain}
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
@@ -59,15 +86,33 @@ function App() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white/5 rounded-lg p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">📚 Study Materials</h3>
-                <p className="text-blue-200">Comprehensive content and key concepts for this domain.</p>
+                <p className="text-blue-200 mb-4">Comprehensive content and key concepts for this domain.</p>
+                <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors opacity-50 cursor-not-allowed">
+                  준비 중
+                </button>
               </div>
               <div className="bg-white/5 rounded-lg p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">🎯 Practice Questions</h3>
-                <p className="text-blue-200">Test your knowledge with domain-specific questions.</p>
+                <p className="text-blue-200 mb-4">Test your knowledge with domain-specific questions.</p>
+                {selectedDomain.id === 1 ? (
+                  <button
+                    onClick={() => handleStartQuiz(1)}
+                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    퀴즈 시작 (20문제)
+                  </button>
+                ) : (
+                  <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors opacity-50 cursor-not-allowed">
+                    준비 중
+                  </button>
+                )}
               </div>
               <div className="bg-white/5 rounded-lg p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">📋 Progress Tracking</h3>
-                <p className="text-blue-200">Monitor your study progress and identify weak areas.</p>
+                <p className="text-blue-200 mb-4">Monitor your study progress and identify weak areas.</p>
+                <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors opacity-50 cursor-not-allowed">
+                  준비 중
+                </button>
               </div>
             </div>
           </div>
