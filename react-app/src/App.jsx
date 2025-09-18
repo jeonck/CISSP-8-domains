@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import PracticeQuiz from './components/PracticeQuiz'
+import StudyMaterials from './components/StudyMaterials'
 import { domain1Questions } from './data/domain1Questions'
+import { domain1StudyMaterials } from './data/domain1StudyMaterials'
 
 const cisspadDomains = [
   { id: 1, name: 'Security and Risk Management', color: 'bg-red-500' },
@@ -16,6 +18,7 @@ const cisspadDomains = [
 function App() {
   const [selectedDomain, setSelectedDomain] = useState(null)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [showStudyMaterials, setShowStudyMaterials] = useState(false)
 
   const handleStartQuiz = (domainId) => {
     if (domainId === 1) {
@@ -24,8 +27,16 @@ function App() {
     }
   }
 
+  const handleShowStudyMaterials = (domainId) => {
+    if (domainId === 1) {
+      setShowStudyMaterials(true)
+      setSelectedDomain(cisspadDomains.find(d => d.id === domainId))
+    }
+  }
+
   const handleBackToMain = () => {
     setShowQuiz(false)
+    setShowStudyMaterials(false)
     setSelectedDomain(null)
   }
 
@@ -34,6 +45,18 @@ function App() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
         <PracticeQuiz
           questions={domain1Questions}
+          domainName={selectedDomain.name}
+          onBack={handleBackToMain}
+        />
+      </div>
+    )
+  }
+
+  if (showStudyMaterials && selectedDomain?.id === 1) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
+        <StudyMaterials
+          studyData={domain1StudyMaterials}
           domainName={selectedDomain.name}
           onBack={handleBackToMain}
         />
@@ -87,9 +110,18 @@ function App() {
               <div className="bg-white/5 rounded-lg p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">📚 Study Materials</h3>
                 <p className="text-blue-200 mb-4">Comprehensive content and key concepts for this domain.</p>
-                <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors opacity-50 cursor-not-allowed">
-                  준비 중
-                </button>
+                {selectedDomain.id === 1 ? (
+                  <button
+                    onClick={() => handleShowStudyMaterials(1)}
+                    className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    학습 자료 보기
+                  </button>
+                ) : (
+                  <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors opacity-50 cursor-not-allowed">
+                    준비 중
+                  </button>
+                )}
               </div>
               <div className="bg-white/5 rounded-lg p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">🎯 Practice Questions</h3>
