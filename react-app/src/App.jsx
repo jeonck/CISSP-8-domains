@@ -5,6 +5,7 @@ import { domain1Questions } from './data/domain1Questions'
 import { domain1StudyMaterials } from './data/domain1StudyMaterials'
 import { domain2Questions } from './data/domain2Questions'
 import { domain3Questions } from './data/domain3Questions'
+import { domain4Questions } from './data/domain4Questions'
 
 const cisspadDomains = [
   {
@@ -63,7 +64,7 @@ function App() {
   const [showStudyMaterials, setShowStudyMaterials] = useState(false)
 
   const handleStartQuiz = (domainId) => {
-    if (domainId === 1 || domainId === 2 || domainId === 3) {
+    if (domainId === 1 || domainId === 2 || domainId === 3 || domainId === 4) {
       setShowQuiz(true)
       setSelectedDomain(cisspadDomains.find(d => d.id === domainId))
     }
@@ -111,6 +112,18 @@ function App() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
         <PracticeQuiz
           questions={domain3Questions}
+          domainName={selectedDomain.name}
+          onBack={handleBackToMain}
+        />
+      </div>
+    )
+  }
+
+  if (showQuiz && selectedDomain?.id === 4) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
+        <PracticeQuiz
+          questions={domain4Questions}
           domainName={selectedDomain.name}
           onBack={handleBackToMain}
         />
@@ -195,7 +208,7 @@ function App() {
               <div className="bg-white/5 rounded-lg p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">🎯 Practice Questions</h3>
                 <p className="text-blue-200 mb-4">Test your knowledge with domain-specific questions.</p>
-                {selectedDomain.id === 1 || selectedDomain.id === 2 || selectedDomain.id === 3 ? (
+                {selectedDomain.id >= 1 && selectedDomain.id <= 4 ? (
                   <button
                     onClick={() => handleStartQuiz(selectedDomain.id)}
                     className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
