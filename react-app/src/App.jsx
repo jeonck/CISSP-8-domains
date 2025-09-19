@@ -8,6 +8,7 @@ import { domain3StudyMaterials } from './data/domain3StudyMaterials'
 import { domain4StudyMaterials } from './data/domain4StudyMaterials'
 import { domain5StudyMaterials } from './data/domain5StudyMaterials'
 import { domain6StudyMaterials } from './data/domain6StudyMaterials'
+import { domain7StudyMaterials } from './data/domain7StudyMaterials'
 import { domain2Questions } from './data/domain2Questions'
 import { domain3Questions } from './data/domain3Questions'
 import { domain4Questions } from './data/domain4Questions'
@@ -80,7 +81,7 @@ function App() {
   }
 
   const handleShowStudyMaterials = (domainId) => {
-    if (domainId >= 1 && domainId <= 6) {
+    if (domainId >= 1 && domainId <= 7) {
       setShowStudyMaterials(true)
       setSelectedDomain(cisspadDomains.find(d => d.id === domainId))
     }
@@ -260,6 +261,18 @@ function App() {
     )
   }
 
+  if (showStudyMaterials && selectedDomain?.id === 7) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
+        <StudyMaterials
+          studyData={domain7StudyMaterials}
+          domainName={selectedDomain.name}
+          onBack={handleBackToMain}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
       <div className="max-w-6xl mx-auto">
@@ -309,7 +322,7 @@ function App() {
               <div className="bg-white/5 rounded-lg p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">📚 Study Materials</h3>
                 <p className="text-blue-200 mb-4">Comprehensive content and key concepts for this domain.</p>
-                {selectedDomain.id >= 1 && selectedDomain.id <= 6 ? (
+                {selectedDomain.id >= 1 && selectedDomain.id <= 7 ? (
                   <button
                     onClick={() => handleShowStudyMaterials(selectedDomain.id)}
                     className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
